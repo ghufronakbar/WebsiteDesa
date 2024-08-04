@@ -1,0 +1,36 @@
+:root {
+  --primary: #71cfb9;
+  --secondary: #fac441;
+  --accent: #556080;
+}
+.bg-primary {
+  background-color: var(--primary);
+}
+.text-primary {
+  color: var(--primary);
+}
+.bg-secondary {
+  background-color: var(--secondary);
+}
+.text-secondary {
+  color: var(--secondary);
+}
+.bg-accent {
+  background-color: var(--accent);
+}
+.text-accent {
+  color: var(--accent);
+}
+.font-poppins {
+  font-family: "Poppins", sans-serif;
+}
+.bg-url {
+  background-image: url("https://setkab.go.id/wp-content/uploads/2022/02/FOTO-DESA-KEMENPAREKRAF.jpeg");
+}
+
+.translate-y-full {
+  transform: translateY(100%);
+}
+.translate-y-0 {
+  transform: translateY(0);
+}
