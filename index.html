@@ -10,7 +10,7 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="./style/global.css" />
+    <link rel="stylesheet" href="./src/style/global.css" />
   </head>
   <body class="bg-url bg-cover bg-center bg-fixed flex flex-col">
     <!-- NAVBAR -->
@@ -22,7 +22,7 @@
           href="#hero"
           class="mr-4 block cursor-pointer py-1.5 font-sans text-base font-medium leading-relaxed text-inherit antialiased flex items-center gap-2"
         >
-          <img src="./src/logo.png" class="w-auto h-12" />
+          <img src="./src/images/logo.png" class="w-auto h-12" />
           <span class="hidden lg:inline-block font-poppins text-xl font-bold"
             >Desa Kertamulya</span
           >
@@ -55,12 +55,12 @@
             </ul>
           </div>
           <div class="flex items-center gap-x-1">
-            <button
+            <a
               class="hidden px-4 py-2 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block"
-              type="button"
+              href="/login"              
             >
               <span>Log In</span>
-            </button>
+            </a>
             <a
               class="hidden select-none rounded-lg bg-primary py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block cursor-pointer"
               href="/pengaduan"
@@ -192,7 +192,7 @@
         <div class="w-full flex flex-col gap-8 md:flex-row items-center">
           <div class="w-full flex justify-center">
             <img
-              src="./src//kades.png"
+              src="./src/images/kades.png"
               class="w-1/2 object-cover rounded-lg hover:scale-105 transition-all"
             />
           </div>
@@ -294,7 +294,7 @@
         </h2>
         <div class="w-full flex flex-col md:flex-row gap-6">
           <img
-            src="./src/struktur.jpg"
+            src="./src/images/struktur.jpg"
             class="w-full object-cover rounded-lg hover:scale-105 transition-all"
           />
           <div class="w-full flex flex-col px-4 gap-2">
@@ -330,7 +330,7 @@
         </h2>
         <div class="w-full flex flex-col md:flex-row gap-6">
           <img
-            src="./src/logo.png"
+            src="./src/images/logo.png"
             class="w-40 h-auto object-cover rounded-lg hover:scale-105 transition-all self-center md:self-start"
           />
           <div class="w-full flex flex-col px-4 gap-2">
@@ -362,7 +362,7 @@
     </section>
 
     <!-- SCRIPTS -->
-    <script src="./script/navbar.js"></script>
-    <script src="./script/scrollSmooth.js"></script>
+    <script src="./src/script/navbar.js"></script>
+    <script src="./src/script/scrollSmooth.js"></script>
   </body>
 </html>
