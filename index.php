@@ -57,13 +57,13 @@
           <div class="flex items-center gap-x-1">
             <a
               class="hidden px-4 py-2 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block"
-              href="/login"              
+              href="./login.php"              
             >
               <span>Log In</span>
             </a>
             <a
               class="hidden select-none rounded-lg bg-primary py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block cursor-pointer"
-              href="/pengaduan"
+              href="./pengaduan.php"
               target="_blank"
               type="button"
             >
@@ -135,7 +135,7 @@
           >
             <a
               class="flex items-center mobile-menu-item"
-              href="/pengaduan"
+              href="./pengaduan.php"
               target="_blank"              
             >
               Pengaduan
