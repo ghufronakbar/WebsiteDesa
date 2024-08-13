@@ -3,6 +3,8 @@ session_start();
 require_once 'services/useCase/adminVerification.php';
 require_once 'services/useCase/getPengaduan.php';
 require_once 'services/useCase/deletePengaduan.php';
+require_once 'services/useCase/updateStatus.php';
+require_once 'services/useCase/formatDate.php';
 
 adminVerification();
 
@@ -17,6 +19,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deletePengaduanId'])) 
   }
   exit();
 }
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pengaduanId']) && isset($_POST['status'])) {
+  $pengaduanId = $_POST['pengaduanId'];
+  $status = $_POST['status'];
+
+  if (updateStatus($pengaduanId, $status)) {
+    echo "<script>alert('Status pengaduan berhasil diperbarui'); window.location.href = 'dashboard.php';</script>";
+  } else {
+    echo "<script>alert('Gagal memperbarui status pengaduan'); window.location.href = 'dashboard.php';</script>";
+  }
+  exit();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,11 +38,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deletePengaduanId'])) 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard - Desa Kertamulya</title>
+  <title>Dashboard - Kalurahan Purwodadi</title>
   <!-- TAILWIND CSS -->
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
-
+  <!-- STYLE -->
   <link rel="stylesheet" href="./src/style/global.css" />
+  <!-- ICON -->
+  <link rel="icon" href="./src/images/kabKidul.png" />
   <script>
     function confirmDelete(pengaduanId) {
       if (confirm('Apakah Anda yakin ingin menghapus pengaduan ini?')) {
@@ -40,11 +56,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deletePengaduanId'])) 
 </head>
 
 <body class="bg-white flex flex-col">
+  <!-- Modal HTML -->
+  <div id="statusModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-gray-900 bg-opacity-50 backdrop-blur-sm">
+    <div class="bg-white rounded-lg p-6">
+      <h2 id="modalTitle" class="text-lg font-bold mb-4">Status Pengaduan</h2>
+      <p id="modalMessage" class="mb-4">Pilih tindakan yang akan dilakukan pada pengaduan ini.</p>
+      <form id="statusForm" method="POST" action="dashboard.php">
+        <input type="hidden" name="pengaduanId" id="pengaduanIdInput">
+        <input type="hidden" name="status" id="statusInput">
+        <div id="modalButtons" class="flex justify-end space-x-4">
+          <button type="button" id="closeModalButton" class="bg-gray-500 text-white rounded-lg px-4 py-2">Tutup</button>
+          <button type="button" id="rejectButton" class="bg-red-500 text-white rounded-lg px-4 py-2 hidden">Tolak</button>
+          <button type="button" id="processButton" class="bg-blue-500 text-white rounded-lg px-4 py-2 hidden">Proses</button>
+          <button type="button" id="doneButton" class="bg-green-500 text-white rounded-lg px-4 py-2 hidden">Selesai</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
   <!-- NAVBAR -->
   <nav class="sticky top-0 z-50 block w-full max-w-full px-4 py-1 text-black bg-white border rounded-none shadow-md border-white/80 lg:px-8 lg:py-2">
     <div class="flex items-center justify-between text-blue-gray-900">
       <a href="../#hero" class="mr-4 block cursor-pointer py-1.5 font-sans text-base font-medium leading-relaxed text-inherit antialiased flex items-center gap-2">
-        <img src="./src/images/logo.png" class="w-auto h-12" />
+        <img src="./src/images/kabKidul.png" class="w-auto h-12" />
         <span class="hidden lg:inline-block font-poppins text-xl font-bold">Dashboard</span>
       </a>
       <div class="flex items-center gap-4">
@@ -76,6 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deletePengaduanId'])) 
             <th scope="col" class="px-6 py-3">Asal Dukuh</th>
             <th scope="col" class="px-6 py-3">Aduan</th>
             <th scope="col" class="px-6 py-3">Tanggal</th>
+            <th scope="col" class="px-6 py-3">Status</th>
             <th scope="col" class="px-6 py-3"></th>
           </tr>
         </thead>
@@ -90,11 +126,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deletePengaduanId'])) 
                 <div>
                   <?php echo htmlspecialchars($pengaduan['nik']); ?>
                 </div>
-            </td>
+              </td>
               <td scope="row" class="px-6 py-3"><?php echo htmlspecialchars($pengaduan['telepon']); ?></td>
               <td scope="row" class="px-6 py-3"><?php echo htmlspecialchars($pengaduan['dukuh']); ?></td>
               <td scope="row" class="px-6 py-3"><?php echo htmlspecialchars($pengaduan['isi']); ?></td>
-              <td scope="row" class="px-6 py-3"><?php echo htmlspecialchars($pengaduan['tanggal']); ?></td>
+              <td scope="row" class="px-6 py-3"><?php echo formatDate(htmlspecialchars($pengaduan['tanggal'])); ?></td>
+              <td scope="row" class="px-6 py-3">
+                <?php if ($pengaduan['status'] == 1) : ?>
+                  <div class="font-medium bg-gray-500 text-white rounded-lg px-4 py-2 w-40 text-center cursor-pointer status-clickable" data-status="1" data-id="<?php echo $pengaduan['pengaduanId']; ?>">
+                    Belum Ditanggapi
+                  </div>
+                <?php elseif ($pengaduan['status'] == 2) : ?>
+                  <div class="font-medium bg-red-500 text-white rounded-lg px-4 py-2 w-40 text-center"> Pengaduan Ditolak </div>
+                <?php elseif ($pengaduan['status'] == 3) : ?>
+                  <div class="font-medium bg-blue-500 text-white rounded-lg px-4 py-2 w-40 text-center cursor-pointer status-clickable" data-status="3" data-id="<?php echo $pengaduan['pengaduanId']; ?>">
+                    Dalam Proses
+                  </div>
+                <?php elseif ($pengaduan['status'] == 4) : ?>
+                  <div class="font-medium bg-green-500 text-white rounded-lg px-4 py-2 w-40 text-center"> Selesai </div>
+                <?php endif; ?>
+              </td>
+
               <td scope="row" class="px-6 py-3">
                 <button class="bg-red-500 text-white font-bold rounded-lg px-4 py-2 mt-2" onclick="confirmDelete(<?php echo $pengaduan['pengaduanId']; ?>)">
                   Hapus
@@ -110,6 +162,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deletePengaduanId'])) 
 
     </div>
   </section>
+
+  <script src="./src/script/modalConfirmation.js"></script>
+
 </body>
 
 </html>

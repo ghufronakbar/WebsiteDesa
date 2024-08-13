@@ -3,14 +3,17 @@ session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login Admin - Desa Kertamulya</title>
   <!-- TAILWIND CSS -->
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
-
+  <!-- STYLE -->
   <link rel="stylesheet" href="./src/style/global.css" />
+  <!-- ICON -->
+  <link rel="icon" href="./src/images/kabKidul.png" />
 </head>
 
 <body class="bg-white flex flex-col">
@@ -19,8 +22,8 @@ session_start();
   <nav class="sticky top-0 z-50 block w-full max-w-full px-4 py-1 text-black bg-white border rounded-none shadow-md border-white/80 lg:px-8 lg:py-2">
     <div class="flex items-center justify-between text-blue-gray-900">
       <a href="../#hero" class="mr-4 block cursor-pointer py-1.5 font-sans text-base font-medium leading-relaxed text-inherit antialiased flex items-center gap-2">
-        <img src="./src/images/logo.png" class="w-auto h-12" />
-        <span class="hidden lg:inline-block font-poppins text-xl font-bold">Desa Kertamulya</span>
+        <img src="./src/images/kabKidul.png" class="w-auto h-12" />
+        <span class="hidden lg:inline-block font-poppins text-xl font-bold">Kalurahan Purwodadi</span>
       </a>
       <div class="flex items-center gap-4">
         <div class="hidden mr-4 lg:block">
@@ -126,25 +129,25 @@ session_start();
         Kontak Kami
       </h2>
       <div class="w-full flex flex-col md:flex-row gap-6">
-        <img src="./src/images/logo.png" class="w-40 h-auto object-cover rounded-lg hover:scale-105 transition-all self-center md:self-start" />
+        <img src="./src/images/kabKidul.png" class="w-40 h-auto object-cover rounded-lg hover:scale-105 transition-all self-center md:self-start" />
         <div class="w-full flex flex-col px-4 gap-2">
           <div class="w-full flex flex-col">
             <h4 class="font-bold text-base font-poppins">Email</h4>
-            <a class="text-sm" href="mailto:desa.kertamulya@example.com">desa.kertamulya@example.com</a>
+            <a class="text-sm" href="mailto:laporpurwodadi@gmail.com">laporpurwodadi@gmail.com</a>
           </div>
           <div class="w-full flex flex-col">
             <h4 class="font-bold text-base font-poppins">Telepon</h4>
-            <a class="text-sm" href="https://wa.me/628123456789">08123456789</a>
+            <a class="text-sm" href="https://wa.me/6282225031574">082225031574</a>
           </div>
         </div>
         <div class="w-full flex flex-col px-4 gap-2">
           <div class="w-full flex flex-col">
             <h4 class="font-bold text-base font-poppins">Alamat</h4>
-            <p class="text-sm">Jl. Kebonagung No. 1</p>
+            <p class="text-sm">Cepogo, Purwodadi, Tepus, Gunungkidul</p>
           </div>
           <div class="w-full flex flex-col">
             <h4 class="font-bold text-base font-poppins">Website</h4>
-            <p class="text-sm">www.desakertamulya.com</p>
+            <p class="text-sm">www.laporpurwodadi.site</p>
           </div>
         </div>
       </div>
