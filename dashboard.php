@@ -52,6 +52,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pengaduanId']) && isse
         document.getElementById('deleteForm').submit();
       }
     }
+
+    function updateStatus(pengaduanId, status) {
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = 'dashboard.php';
+
+      const inputPengaduanId = document.createElement('input');
+      inputPengaduanId.type = 'hidden';
+      inputPengaduanId.name = 'pengaduanId';
+      inputPengaduanId.value = pengaduanId;
+
+      const inputStatus = document.createElement('input');
+      inputStatus.type = 'hidden';
+      inputStatus.name = 'status';
+      inputStatus.value = status;
+
+      form.appendChild(inputPengaduanId);
+      form.appendChild(inputStatus);
+      document.body.appendChild(form);
+      form.submit();
+    }
   </script>
 </head>
 
@@ -74,7 +95,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pengaduanId']) && isse
     </div>
   </div>
 
-
   <!-- NAVBAR -->
   <nav class="sticky top-0 z-50 block w-full max-w-full px-4 py-1 text-black bg-white border rounded-none shadow-md border-white/80 lg:px-8 lg:py-2">
     <div class="flex items-center justify-between text-blue-gray-900">
@@ -93,7 +113,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pengaduanId']) && isse
       </div>
     </div>
   </nav>
-
 
   <!-- DASHBOARD -->
   <section id="dashboard" class="w-full min-h-[80vh] z-10">
@@ -129,22 +148,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pengaduanId']) && isse
               </td>
               <td scope="row" class="px-6 py-3"><?php echo htmlspecialchars($pengaduan['telepon']); ?></td>
               <td scope="row" class="px-6 py-3"><?php echo htmlspecialchars($pengaduan['dukuh']); ?></td>
-              <td scope="row" class="px-6 py-3"><?php echo htmlspecialchars($pengaduan['isi']); ?></td>
+              <td scope="row" class="px-6 py-3 max-w-2xl">
+                <?php if ($pengaduan['foto'] != null): ?>
+                  <img src="uploads/<?php echo htmlspecialchars($pengaduan['foto']); ?>" class="w-full h-32 object-cover mb-4 cursor-pointer" onclick="window.open('uploads/<?php echo htmlspecialchars($pengaduan['foto']); ?>', '_blank')"/>
+                  <p class="cursor-pointer text-sm text-gray-500 -mt-4" onclick="window.open('uploads/<?php echo htmlspecialchars($pengaduan['foto']); ?>', '_blank')">Klik gambar untuk melihat</p>
+                <?php endif; ?>
+                <?php echo htmlspecialchars($pengaduan['isi']); ?>
+              </td>
+
               <td scope="row" class="px-6 py-3"><?php echo formatDate(htmlspecialchars($pengaduan['tanggal'])); ?></td>
               <td scope="row" class="px-6 py-3">
-                <?php if ($pengaduan['status'] == 1) : ?>
-                  <div class="font-medium bg-gray-500 text-white rounded-lg px-4 py-2 w-40 text-center cursor-pointer status-clickable" data-status="1" data-id="<?php echo $pengaduan['pengaduanId']; ?>">
-                    Belum Ditanggapi
-                  </div>
-                <?php elseif ($pengaduan['status'] == 2) : ?>
-                  <div class="font-medium bg-red-500 text-white rounded-lg px-4 py-2 w-40 text-center"> Pengaduan Ditolak </div>
-                <?php elseif ($pengaduan['status'] == 3) : ?>
-                  <div class="font-medium bg-blue-500 text-white rounded-lg px-4 py-2 w-40 text-center cursor-pointer status-clickable" data-status="3" data-id="<?php echo $pengaduan['pengaduanId']; ?>">
-                    Dalam Proses
-                  </div>
-                <?php elseif ($pengaduan['status'] == 4) : ?>
-                  <div class="font-medium bg-green-500 text-white rounded-lg px-4 py-2 w-40 text-center"> Selesai </div>
-                <?php endif; ?>
+                <select
+                  name="status"
+                  class="bg-gray-200 text-gray-800 rounded-lg px-4 py-2 min-w-[420px]"
+                  onchange="updateStatus(<?php echo $pengaduan['pengaduanId']; ?>, this.value)">
+                  <option value="1" <?php echo $pengaduan['status'] == 1 ? 'selected' : ''; ?>>Belum Ditanggapi</option>
+                  <option value="2" <?php echo $pengaduan['status'] == 2 ? 'selected' : ''; ?>>Pengaduan Ditolak</option>
+                  <option value="3" <?php echo $pengaduan['status'] == 3 ? 'selected' : ''; ?>>Dalam Proses</option>
+                  <option value="4" <?php echo $pengaduan['status'] == 4 ? 'selected' : ''; ?>>Selesai</option>
+                </select>
               </td>
 
               <td scope="row" class="px-6 py-3">

@@ -43,7 +43,7 @@
           <a class="hidden px-4 py-2 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block" href="./login.php">
             <span>Log In</span>
           </a>
-          <a class="hidden select-none rounded-lg bg-primary py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block cursor-pointer" href="/pengaduan" target="_blank" type="button">
+          <a class="hidden select-none rounded-lg bg-primary py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block cursor-pointer" href="./pengaduan.php" target="_blank" type="button">
             <span>Pengaduan</span>
           </a>
         </div>
@@ -73,7 +73,7 @@
           <a href="./#footer" class="flex items-center mobile-menu-item">Kontak</a>
         </li>
         <li class="block p-1 font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-          <a class="flex items-center mobile-menu-item" href="/pengaduan" target="_blank">
+          <a class="flex items-center mobile-menu-item" href="./pengaduan.php" target="_blank">
             Pengaduan
           </a>
         </li>
@@ -88,7 +88,8 @@
         Formulir Pengaduan
       </h2>
       <div class="w-full flex flex-col gap-8 items-center">
-        <form class="w-full md:w-9/12 lg:w-8/12 flex flex-col gap-4 items-center" action="pengaduan.php" method="post">
+        <form class="w-full md:w-9/12 lg:w-8/12 flex flex-col gap-4 items-center" action="pengaduan.php" method="post" enctype="multipart/form-data">
+          <a href="./riwayat-pengaduan.php" class="text-white bg-primary w-fit px-6 py-2 rounded-lg font-poppins font-bold text-sm self-end">Cek Status Aduan</a>
           <div class="w-full flex flex-col gap-2">
             <label for="nama" class="text-black font-bold">Nama</label>
             <input type="text" class="border border-black rounded-lg px-4 py-2" id="nama" name="nama" placeholder="Masukkan Nama" />
@@ -109,6 +110,11 @@
             <label for="isi" class="text-black font-bold">Aduan</label>
             <textarea type="text" class="border border-black rounded-lg px-4 py-2" id="isi" name="isi" placeholder="Masukkan Aduan" rows="5"></textarea>
           </div>
+          <div class="w-full flex flex-col gap-2">
+            <label for="foto" class="text-black font-bold">Lampirkan Foto</label>
+            <input type="file" class="border border-black rounded-lg px-4 py-2" id="foto" name="foto" accept=".jpg, .jpeg, .png" />
+            <p class="text-sm text-gray-500">Format yang diperbolehkan: .jpg, .jpeg, .png</p>
+          </div>
           <div class="w-full flex flex-row md:gap-1 items-center">
             <input type="checkbox" class="border border-black rounded-lg px-4 py-2" id="anonim" name="anonim" />
             <label for="anonim" class="text-black">Kirim sebagai anonim</label>
@@ -118,7 +124,7 @@
       </div>
     </div>
   </section>
-
+  
   <?php
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     require_once 'services/useCase/createPengaduan.php';
@@ -147,10 +153,37 @@
       $isi = $_POST['isi'];
     }
 
-    $result = createPengaduan($nama, $telepon, $dukuh, $isi, $nik);
+    $foto = null;
+    if (isset($_FILES['foto']) && $_FILES['foto']['error'] == UPLOAD_ERR_OK) {
+      $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+      $fileType = mime_content_type($_FILES['foto']['tmp_name']);
+
+      if (in_array($fileType, $allowedTypes)) {
+        $ext = pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
+        $foto = uniqid('', true) . '.' . $ext;
+        $uploadDir = __DIR__ . '/uploads/';
+
+        if (!file_exists($uploadDir)) {
+          mkdir($uploadDir, 0755, true);
+        }
+
+        if (move_uploaded_file($_FILES['foto']['tmp_name'], $uploadDir . $foto)) {
+          
+        } else {
+          echo "<script>alert('Gagal mengunggah file');</script>";
+          exit;
+        }
+      } else {
+        echo "<script>alert('Format file tidak diperbolehkan. Hanya .jpg, .jpeg, .png yang diizinkan.');</script>";
+        exit;
+      }
+    }
+
+    $result = createPengaduan($nama, $telepon, $dukuh, $isi, $nik, $foto);
     echo "<script>alert('Pengaduan Terkirim');</script>";
   }
   ?>
+
 
 
   <!-- FOOTER SECTION -->

@@ -13,7 +13,7 @@
   <link rel="icon" href="./src/images/kabKidul.png" />
 </head>
 
-<body class="bg-url bg-cover bg-center bg-fixed flex flex-col">
+<body class="bg-desa bg-cover bg-center bg-fixed flex flex-col" style="background-image: url('./src/images/hero.jpg');">
   <!-- NAVBAR -->
   <nav
     class="sticky top-0 z-50 block w-full max-w-full px-4 py-1 text-black bg-white border rounded-none shadow-md border-white/80 lg:px-8 lg:py-2">

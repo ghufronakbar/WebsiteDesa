@@ -4,7 +4,7 @@ function getPengaduan()
 {
     global $conn;
 
-    $sql = "SELECT * FROM pengaduan ORDER BY tanggal DESC";
+    $sql = "SELECT * FROM pengaduan ORDER BY pengaduanId DESC";
     $result = $conn->query($sql);
 
     $pengaduan = [];

@@ -24,8 +24,8 @@
 .font-poppins {
   font-family: "Poppins", sans-serif;
 }
-.bg-url {
-  background-image: url("https://setkab.go.id/wp-content/uploads/2022/02/FOTO-DESA-KEMENPAREKRAF.jpeg");
+.bg-desa {
+  background-image: url(../images/hero.jpg);  
 }
 
 .translate-y-full {
