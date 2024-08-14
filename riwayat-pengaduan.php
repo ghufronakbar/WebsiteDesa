@@ -2,7 +2,11 @@
 require_once 'services/useCase/getPengaduan.php';
 require_once 'services/useCase/formatDate.php';
 
-$pengaduanList = getPengaduan();
+
+$q = isset($_GET['q']) ? $_GET['q'] : '';
+$pengaduanList = getPengaduan($q);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -18,6 +22,7 @@ $pengaduanList = getPengaduan();
     <link rel="stylesheet" href="./src/style/global.css" />
     <!-- ICON -->
     <link rel="icon" href="./src/images/kabKidul.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body class="bg-white flex flex-col">
@@ -94,8 +99,14 @@ $pengaduanList = getPengaduan();
             <h2 class="text-black font-bold text-lg md:text-xl lg:text-2xl md:text-xl lg:text-2xl font-poppins text-center">
                 Data Pengaduan
             </h2>
-            <a href="./pengaduan.php" class="text-white bg-primary w-fit px-6 py-2 rounded-lg font-poppins font-bold text-sm self-end">Tambah Aduan</a>
             <!-- TABLE -->
+            <form class="w-full flex md:flex-row flex-col gap-2 justify-between" action="riwayat-pengaduan.php" method="get">
+                <a href="./pengaduan.php" class="text-white bg-primary w-fit px-6 py-2 rounded-lg font-poppins font-bold text-sm self-end">Tambah Aduan</a>
+                <div class="w-full md:w-1/2 lg:w-1/3 flex flex-row gap-2">
+                    <input class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" type="text" id="q" name="q" placeholder="Cari pengaduan...  " value="<?php echo isset($_GET['q']) ? $_GET['q'] : ''; ?>" />
+                    <button class="w-fit bg-primary text-white font-bold rounded-lg px-4 py-2" type="submit"><i class="fa fa-search"></i></button>
+                </div>
+            </form>
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -107,10 +118,15 @@ $pengaduanList = getPengaduan();
                     </tr>
                 </thead>
                 <tbody>
+                    <?php
+                    if (count($pengaduanList) == 0) {
+                        echo '<tr class="bg-white border-b text-black"><td colspan="5" class="px-6 py-8 text-center">Tidak ada data pengaduan dengan keyword <b>&quot;' . $_GET['q'] . '&quot;</b></td></tr>';
+                    }
+                    ?>
                     <?php foreach ($pengaduanList as $index => $pengaduan) : ?>
                         <tr class="bg-white border-b text-black">
                             <td scope="row" class="px-6 py-3"><?php echo $index + 1; ?></td>
-                            <td scope="row" class="px-6 py-3 font-medium"><?php echo htmlspecialchars($pengaduan['nama']); ?></td>                            
+                            <td scope="row" class="px-6 py-3 font-medium"><?php echo htmlspecialchars($pengaduan['nama']); ?></td>
                             <td scope="row" class="px-6 py-3 max-w-xl"><?php echo htmlspecialchars($pengaduan['isi']); ?></td>
                             <td scope="row" class="px-6 py-3"><?php echo formatDate(htmlspecialchars($pengaduan['tanggal'])); ?></td>
                             <td scope="row" class="px-6 py-3">
@@ -126,7 +142,7 @@ $pengaduanList = getPengaduan();
                                     </div>
                                 <?php elseif ($pengaduan['status'] == 4) : ?>
                                     <div class="font-medium bg-green-500 text-white rounded-lg px-4 py-2 w-40 text-center"> Selesai </div>
-                                <?php endif; ?>                                
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

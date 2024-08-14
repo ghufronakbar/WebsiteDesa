@@ -8,7 +8,8 @@ require_once 'services/useCase/formatDate.php';
 
 adminVerification();
 
-$pengaduanList = getPengaduan();
+$q = isset($_GET['q']) ? $_GET['q'] : '';
+$pengaduanList = getPengaduan($q);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deletePengaduanId'])) {
   $pengaduanId = $_POST['deletePengaduanId'];
@@ -45,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pengaduanId']) && isse
   <link rel="stylesheet" href="./src/style/global.css" />
   <!-- ICON -->
   <link rel="icon" href="./src/images/kabKidul.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script>
     function confirmDelete(pengaduanId) {
       if (confirm('Apakah Anda yakin ingin menghapus pengaduan ini?')) {
@@ -120,7 +122,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pengaduanId']) && isse
       <h2 class="text-2xl font-bold font-poppins">
         Data Pengaduan Masyarakat
       </h2>
-
+      <form class="w-full md:w-1/2 lg:w-1/3 flex flex-row gap-2 self-end" action="dashboard.php" method="get">
+        <input class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" type="text" id="q" name="q" placeholder="Cari pengaduan...  " value="<?php echo isset($_GET['q']) ? $_GET['q'] : ''; ?>" />
+        <button class="w-fit bg-primary text-white font-bold rounded-lg px-4 py-2" type="submit"><i class="fa fa-search"></i></button>
+      </form>
       <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
@@ -135,6 +140,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pengaduanId']) && isse
           </tr>
         </thead>
         <tbody>
+          <?php
+          if (count($pengaduanList) == 0) {
+            echo '<tr class="bg-white border-b text-black"><td colspan="8" class="px-6 py-8 text-center">Tidak ada data pengaduan dengan keyword <b>&quot;' . $_GET['q'] . '&quot;</b></td></tr>';
+          }
+          ?>
           <?php foreach ($pengaduanList as $index => $pengaduan) : ?>
             <tr class="bg-white border-b text-black">
               <td scope="row" class="px-6 py-3"><?php echo $index + 1; ?></td>
@@ -150,7 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pengaduanId']) && isse
               <td scope="row" class="px-6 py-3"><?php echo htmlspecialchars($pengaduan['dukuh']); ?></td>
               <td scope="row" class="px-6 py-3 max-w-2xl">
                 <?php if ($pengaduan['foto'] != null): ?>
-                  <img src="uploads/<?php echo htmlspecialchars($pengaduan['foto']); ?>" class="w-full h-32 object-cover mb-4 cursor-pointer" onclick="window.open('uploads/<?php echo htmlspecialchars($pengaduan['foto']); ?>', '_blank')"/>
+                  <img src="uploads/<?php echo htmlspecialchars($pengaduan['foto']); ?>" class="w-full h-32 object-cover mb-4 cursor-pointer" onclick="window.open('uploads/<?php echo htmlspecialchars($pengaduan['foto']); ?>', '_blank')" />
                   <p class="cursor-pointer text-sm text-gray-500 -mt-4" onclick="window.open('uploads/<?php echo htmlspecialchars($pengaduan['foto']); ?>', '_blank')">Klik gambar untuk melihat</p>
                 <?php endif; ?>
                 <?php echo htmlspecialchars($pengaduan['isi']); ?>
