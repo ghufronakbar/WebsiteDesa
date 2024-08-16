@@ -30,7 +30,11 @@
             class="flex flex-col gap-2 mt-2 mb-4 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
             <li
               class="block p-1 font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-              <a href="#visi" class="flex items-center">Visi Misi</a>
+              <a href="#hero" class="flex items-center">Home</a>
+            </li>
+            <li
+              class="block p-1 font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+              <a href="#visi" class="flex items-center">Tentang Kami</a>
             </li>
             <li
               class="block p-1 font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
@@ -46,12 +50,7 @@
             </li>
           </ul>
         </div>
-        <div class="flex items-center gap-x-1">
-          <a
-            class="hidden px-4 py-2 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block"
-            href="./login.php">
-            <span>Log In</span>
-          </a>
+        <div class="flex items-center gap-x-1">          
           <a
             class="hidden select-none rounded-lg bg-primary py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block cursor-pointer"
             href="./pengaduan.php"
@@ -87,9 +86,13 @@
       id="mobile-menu"
       class="fixed inset-0 z-40 bg-white border-t border-gray-200 lg:hidden transform translate-y-full transition-transform duration-300 ease-in-out">
       <ul class="flex flex-col p-4 space-y-4">
+      <li
+          class="block p-1 font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+          <a href="#hero" class="flex items-center mobile-menu-item">Home</a>
+        </li>
         <li
           class="block p-1 font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-          <a href="#visi" class="flex items-center mobile-menu-item">Visi Misi</a>
+          <a href="#visi" class="flex items-center mobile-menu-item">Tentang Kami</a>
         </li>
         <li
           class="block p-1 font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
@@ -161,7 +164,7 @@
             class="w-full h-48 object-cover rounded-t-lg hover:scale-105 transition-all" />
           <div class="w-full flex flex-col gap-2 px-4 text-center">
             <h3 class="text-black font-bold text-lg font-poppins">
-              Pengaduan Online 24 Jam Real-Time
+              Pengaduan Online 24 Jam
             </h3>
             <p class="text-black text-sm">
               Status pengaduan yang dapat dipantau secara real-time oleh pelapor.
@@ -218,8 +221,8 @@
         <div
           class="w-full flex flex-col gap-4 pb-4 border border-gray-300 rounded-lg overflow-hidden">
           <img
-            src="./src/images/mudah.png"
-            class="w-full h-48 object-cover rounded-t-lg hover:scale-105 transition-all" />
+            src="./src/images/efisiensi.png"
+            class="w-full h-48 object-cover rounded-t-lg hover:scale-60 transition-all" />
           <div class="w-full flex flex-col gap-2 px-4 text-center">
             <h3 class="text-black font-bold text-lg font-poppins">
               Efisiensi

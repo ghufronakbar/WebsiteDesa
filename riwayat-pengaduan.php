@@ -38,7 +38,10 @@ $pengaduanList = getPengaduan($q);
                 <div class="hidden mr-4 lg:block">
                     <ul class="flex flex-col gap-2 mt-2 mb-4 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
                         <li class="block p-1 font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                            <a href="./#visi" class="flex items-center">Visi Misi</a>
+                            <a href="./#hero" class="flex items-center">Home</a>
+                        </li>
+                        <li class="block p-1 font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                            <a href="./#visi" class="flex items-center">Tentang Kami</a>
                         </li>
                         <li class="block p-1 font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
                             <a href="./#wisata" class="flex items-center">Wisata</a>
@@ -52,9 +55,6 @@ $pengaduanList = getPengaduan($q);
                     </ul>
                 </div>
                 <div class="flex items-center gap-x-1">
-                    <a class="hidden px-4 py-2 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block" href="./login.php">
-                        <span>Log In</span>
-                    </a>
                     <a class="hidden select-none rounded-lg bg-primary py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block cursor-pointer" href="./pengaduan.php" target="_blank" type="button">
                         <span>Pengaduan</span>
                     </a>
@@ -73,7 +73,10 @@ $pengaduanList = getPengaduan($q);
         <div id="mobile-menu" class="fixed inset-0 z-40 bg-white border-t border-gray-200 lg:hidden transform translate-y-full transition-transform duration-300 ease-in-out">
             <ul class="flex flex-col p-4 space-y-4">
                 <li class="block p-1 font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                    <a href="./#visi" class="flex items-center mobile-menu-item">Visi Misi</a>
+                    <a href="./#hero" class="flex items-center mobile-menu-item">Home</a>
+                </li>
+                <li class="block p-1 font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                    <a href="./#visi" class="flex items-center mobile-menu-item">Tentang Kami</a>
                 </li>
                 <li class="block p-1 font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
                     <a href="./#wisata" class="flex items-center mobile-menu-item">Wisata</a>
