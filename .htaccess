@@ -1,0 +1,20 @@
+RewriteEngine On
+
+# Redirect HTTP to HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Redirect specific .php requests to non-.php URL
+RewriteCond %{THE_REQUEST} \s/+(index|pengaduan|riwayat-pengaduan|dashboard)\.php[\s?] [NC]
+RewriteRule ^(index|pengaduan|riwayat-pengaduan|dashboard)\.php$ /$1 [R=301,L]
+
+# Remove .php extension from URLs internally
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^/]+)$ $1.php [L]
+
+# Redirect 404 errors to root
+ErrorDocument 404 /custom-404-handler
+RewriteRule ^custom-404-handler$ / [L,R=302]
+
